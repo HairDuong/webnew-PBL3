@@ -1,0 +1,289 @@
+/* Reset toàn cục */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* Thiết lập chung cho body */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #eef2f3; /* Màu nền dịu nhẹ */
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+
+  /* Hình nền */
+  background-image: url('./anhnen.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Tiêu đề chính */
+h1 {
+  text-align: center;
+  color: #222;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+/* Container cho bố cục chung */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Nền trắng với độ mờ nhẹ */
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Cột trái nhỏ hơn, cột phải rộng hơn */
+  gap: 15px;
+}
+
+/* Phần trạng thái quạt */
+.fan-status {
+  
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 10px; /* Điều chỉnh khoảng cách với ô bên dưới */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 330px;
+}
+
+/* Phần đặt thời gian */
+.time-setting {
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10px; /* Điều chỉnh khoảng cách với ô trên */
+  max-width: 400px;
+  margin-left: 1px; /* Căn trái/phải chính giữa */
+  margin-right: auto;
+}
+
+
+/* CSS cho các nhãn (label) và ô nhập */
+.time-inputs label {
+  display: inline-block;
+  margin: 0 10px; /* Khoảng cách ngang giữa các nhãn */
+  font-size: 1rem; /* Kích thước chữ */
+  color: #333; /* Màu chữ */
+}
+
+.time-inputs input {
+  width: 45px; /* Chiều rộng cho ô nhập */
+  padding: 8px; /* Khoảng cách bên trong */
+  margin-top: 5px; /* Khoảng cách phía trên */
+  border-radius: 5px; /* Bo tròn góc ô nhập */
+  border: 1px solid #ccc; /* Đường viền màu xám */
+  font-size: 1rem; /* Kích thước chữ */
+  text-align: center; /* Căn giữa chữ trong ô nhập */
+}
+
+
+/* CSS cho nút gửi thời gian */
+.time-setting button {
+  background-color: #4caf50; /* Màu nền xanh lá */
+  color: white; /* Màu chữ trắng */
+  padding: 10px 20px; /* Khoảng cách bên trong nút */
+  margin-top: 15px; /* Khoảng cách phía trên nút */
+  border-radius: 5px; /* Bo tròn góc nút */
+  border: none; /* Loại bỏ viền */
+  font-size: 1rem; /* Kích thước chữ */
+  cursor: pointer; /* Con trỏ chuột */
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+}
+
+
+.time-setting button:active {
+  background-color: #388e3c; /* Màu nền khi bấm */
+  box-shadow: 0 3px #666; /* Hiệu ứng nhấn nút */
+  transform: translateY(2px); /* Nút lún xuống */
+}
+
+/* Hiển thị thời gian thực */
+.real-time {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.real-time h2,
+.fan-status h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Thiết bị (Devices) */
+.devices-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Chia 2 cột đều nhau */
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.device {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.device h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Nút bật/tắt */
+.device-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 50px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.device-btn.on {
+  background-color: #931313; /* Đỏ */
+}
+
+.device-btn.off {
+  background-color: #390ac5; /* Xanh lá */
+}
+
+.device-btn:hover {
+  opacity: 0.9;
+}
+
+.device-btn:focus {
+  outline: none;
+}
+
+/* Thông tin cảm biến */
+.sensor-info {
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.sensor-item i {
+  font-size: 2rem;
+  color: black;
+}
+
+.sensor-item span {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 5px;
+  color: #333;
+}
+
+/* Thông tin thức ăn và nước uống */
+.food-water-info {
+  grid-column: 2;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.food-water-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.food-water-item {
+  text-align: center;
+}
+
+.food-water-item i {
+  font-size: 1.5rem;
+  color:black;
+  margin-bottom: 10px;
+}
+
+/* Phong cách đáp ứng trên di động */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr; /* Chuyển thành cột đơn */
+  }
+
+  .devices-grid {
+    grid-template-columns: 1fr; /* Các thiết bị chuyển thành 1 cột */
+  }
+
+  .sensor-grid {
+    grid-template-columns: 1fr; /* Cảm biến thành 1 cột */
+  }
+
+  .food-water-grid {
+    grid-template-columns: 1fr; /* Thức ăn & nước thành 1 cột */
+  }
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2); /* Overlay tối màu nhẹ */
+  z-index: -1;
+}
+
+.fan-mode-btn {
+  background-color: #4caf50; /* Màu xanh */
+  color: white;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.fan-mode-btn:hover {
+  background-color: #4caf50; /* Màu xanh đậm khi hover */
+}
+
+.fan-mode-btn:active {
+  background-color: #4caf50; /* Màu xanh đậm khi bấm */
+  transform: translateY(2px); /* Hiệu ứng nút bị nhấn */
+}
+
+.trangthai {
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1px;
+}

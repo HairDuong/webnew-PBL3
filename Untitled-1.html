@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đồ án PBL3</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script defer src="script.js"></script>
+
+</head>
+<body>
+  
+  <div class="container">
+    <h1>Đồ án PBL3</h1>
+    <div class="real-time">
+      <h2>Thời gian hiện tại: <span id="current-time"></span></h2>
+    </div>
+
+    <div class="fan-status">
+      <h3>Trạng thái quạt: <span id="fan-mode">MANUAL</span></h3>
+      <button id="toggle-fan-mode" class="fan-mode-btn">Chuyển sang Tự động</button>
+    </div>
+
+    <div class="devices-grid">
+      <div class="device">
+        <h3>Quạt</h3>
+        <button class="device-btn" id="toggle-quat">Bật Quạt</button>
+
+      </div>
+      <div class="device">
+        <h3>Máy bơm</h3>
+        <button class="device-btn" id="toggle-maybom">Bật Máy bơm</button>
+      </div>
+      <div class="device">
+        <h3>Đèn</h3>
+        <button class="device-btn" id="toggle-den">Bật Đèn</button>
+      </div>
+      <div class="device">
+        <h3>Servo</h3>
+        <button class="device-btn" id="toggle-servo">Bật Servo</button>
+      </div>
+      <div class="device">
+        <h3>Máy bơm 2</h3>
+        <button class="device-btn" id="toggle-maybom2">Bật Máy bơm 2</button>
+      </div>
+    </div>
+
+    <div class="time-setting">
+      <h2>Đặt thời gian cho ăn</h2>
+      <div class="time-inputs">
+        <label>Giờ: <input type="number" id="hour" min="0" max="23"></label>
+        <label>Phút: <input type="number" id="minute" min="0" max="59"></label>
+        <label>Giây: <input type="number" id="second" min="0" max="59"></label>
+      </div>
+      <button id="send-time">Gửi Thời Gian</button>
+    </div>
+
+    <div class="trangthai">
+      <h3>Trạng thái thiết bị</h3>
+      <ul>
+        <li>Máy bơm 1: <span id="status-maybom1">Không hoạt động</span></li>
+        <li>Máy bơm 2: <span id="status-maybom2">Không hoạt động</span></li>
+        <li>Đèn: <span id="status-den">Không hoạt động</span></li>
+        <li>Quạt: <span id="status-quat">Không hoạt động</span></li>
+      </ul>
+    </div>
+
+    <div class="sensor-info">
+      <h2>Thông tin cảm biến</h2>
+      <div class="sensor-grid">
+        <div class="sensor-item">
+          <i class="fas fa-thermometer-half"></i>
+          <p>Nhiệt độ</p>
+          <span id="temperature">--°C</span>
+        </div>
+        <div class="sensor-item">
+          <i class="fas fa-tint"></i>
+          <p>Độ ẩm</p>
+          <span id="humidity">--%</span>
+        </div>
+        <div class="sensor-item">
+          <i class="fas fa-smog"></i>
+          <p>Nồng độ</p>
+          <span id="concentration">--ppm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="food-water-info">
+      <h2>Thông tin thức ăn và nước uống</h2>
+      <div class="food-water-grid">
+        <div class="food-water-item">
+          <i class="fas fa-drumstick-bite"></i>
+          <p>Tỉ lệ thức ăn</p>
+          <span id="food-rate">--%</span>
+        </div>
+        <div class="food-water-item">
+          <i class="fas fa-water"></i>
+          <p>Tỉ lệ nước uống</p>
+          <span id="water-rate">--%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+
+</html>
