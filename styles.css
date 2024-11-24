@@ -160,11 +160,11 @@ h1 {
 }
 
 .device-btn.on {
-  background-color: #931313; /* Đỏ */
+  background-color: #ee0f0f; /* Đỏ */
 }
 
 .device-btn.off {
-  background-color: #390ac5; /* Xanh lá */
+  background-color: #388e3c; /* Xanh lá */
 }
 
 .device-btn:hover {

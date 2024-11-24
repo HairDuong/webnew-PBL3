@@ -1,4 +1,5 @@
 let mqttClient;
+let fanMode = "MANUAL"; // Biến lưu trữ trạng thái hiện tại của quạt ("MANUAL" hoặc "AUTOMATIC")
 
 window.addEventListener("load", (event) => {
   connectToBroker();
@@ -10,12 +11,13 @@ window.addEventListener("load", (event) => {
   const buttonden = document.querySelector("#toggle-den");
   const buttonservo = document.querySelector("#toggle-servo");
   const sendTimeBtn = document.querySelector("#send-time");
+  const toggleFanModeButton = document.querySelector("#toggle-fan-mode");
   
-  buttonquat.textContent = "Bật Quạt";
-  buttonmaybom.textContent = "Bật Máy Bơm 1";
-  buttonmaybom2.textContent = "Bật Máy Bơm 2";
-  buttonden.textContent = "Bật Đèn";
-  buttonservo.textContent = "Bật Servo";
+  buttonquat.textContent = "Turn ON";
+  buttonmaybom.textContent = "Turn ON";
+  buttonmaybom2.textContent = "Turn ON";
+  buttonden.textContent = "Turn ON";
+  buttonservo.textContent = "Turn ON";
 
   buttonquat.classList.add("off");
   buttonmaybom.classList.add("off");
@@ -44,6 +46,14 @@ window.addEventListener("load", (event) => {
   });
 
   sendTimeBtn.addEventListener("click", handleTimeSubmit);
+
+  if (toggleFanModeButton) {
+    toggleFanModeButton.addEventListener("click", toggleFanMode);
+  }
+
+  // Thiết lập thời gian thực
+  updateCurrentTime(); // Gọi lần đầu khi tải trang
+  setInterval(updateCurrentTime, 1000); // Cập nhật mỗi giây
 });
 
 function connectToBroker() {
@@ -131,6 +141,18 @@ function connectToBroker() {
     } else if (topic === "esp32/waterrate") {
       document.getElementById("water-rate").textContent = messageStr +" %";
     }
+
+     // Xử lý trạng thái thiết bị dựa trên dòng điện
+     let current = parseFloat(messageStr); // Chuyển thông điệp thành giá trị số để kiểm tra
+     if (topic === "esp32/maybom1/test") {
+       setDeviceStatus("maybom1", current > 0 ? "active" : "unactive");
+     } else if (topic === "esp32/maybom2/test") {
+       setDeviceStatus("maybom2", current > 0 ? "active" : "unactive");
+     } else if (topic === "esp32/den/test") {
+       setDeviceStatus("den", current > 0 ? "active" : "unactive");
+     } else if (topic === "esp32/quat/test") {
+       setDeviceStatus("quat", current > 0 ? "active" : "unactive");
+     }
     
   });
 }
@@ -154,12 +176,12 @@ function toggleDevice(button, topic) {
     message = "OFF";
     button.classList.remove("on");
     button.classList.add("off");
-    button.textContent = "Bật thiết bị";
+    button.textContent = "Turn ON";
   } else {
     message = "ON";
     button.classList.remove("off");
     button.classList.add("on");
-    button.textContent = "Tắt thiết bị";
+    button.textContent = "Turn OFF";
   }
 
   mqttClient.publish(topic, message, {
@@ -174,10 +196,55 @@ function updateButtonState(button, message) {
   if (message.trim() === "ON") {
     button.classList.remove("off");
     button.classList.add("on");
-    button.textContent = "Tắt thiết bị";
+    button.textContent = "Turn OFF";
   } else if (message.trim() === "OFF") {
     button.classList.remove("on");
     button.classList.add("off");
-    button.textContent = "Bật thiết bị";
+    button.textContent = "Turn ON";
+  }
+}
+
+const toggleFanMode = () => {
+  // Chuyển đổi trạng thái quạt
+  const newMode = fanMode === "MANUAL" ? "AUTOMATIC" : "MANUAL";
+
+  // Gửi trạng thái mới qua MQTT
+  if (mqttClient) {
+    mqttClient.publish("esp32/fan/mode", newMode, { qos: 0, retain: true });
+    console.log(`Sent new fan mode: ${newMode}`);
+  }
+  // Cập nhật trạng thái quạt trong ứng dụng
+  setFanMode(newMode);
+}
+
+const setFanMode = (mode) => {
+  fanMode = mode;
+
+  // Cập nhật trạng thái trên giao diện web
+  const fanModeElement = document.querySelector("#fan-mode");
+  if (fanModeElement) {
+    fanModeElement.textContent = mode;
+  }
+
+  // Cập nhật văn bản của nút chuyển đổi
+  const toggleFanModeButton = document.querySelector("#toggle-fan-mode");
+  if (toggleFanModeButton) {
+    toggleFanModeButton.textContent = mode === "MANUAL" ? "switch to AUTOMATIC" : "switch to MANUAL";
+  }
+};
+
+// Hàm cập nhật trạng thái thiết bị trên giao diện web
+function setDeviceStatus(device, status) {
+  const statusElement = document.getElementById(`status-${device}`);
+  if (statusElement) {
+    statusElement.textContent = status;
+  }
+}
+
+// Hàm cập nhật thời gian hiện tại
+function updateCurrentTime() {
+  const currentTimeElement = document.getElementById("current-time");
+  if (currentTimeElement) {
+    currentTimeElement.textContent = new Date().toLocaleTimeString();
   }
 }
